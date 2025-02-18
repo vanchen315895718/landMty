@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@TableName("ums_member")
+@TableName("land_mg.ums_member")
 public class User implements UserDetails, Serializable {
 
     @Serial
