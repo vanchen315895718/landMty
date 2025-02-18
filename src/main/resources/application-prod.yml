@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:127.0.0.1}:${DB_PORT:5432}/mty_land
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:123456}
+
+springdoc:
+  api-docs:
+    enabled: false

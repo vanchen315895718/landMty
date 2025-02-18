@@ -1,0 +1,29 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:127.0.0.1}:${DB_PORT:5432}/mty_land
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:123456}
+
+# Actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        # 开放所有端点，生产环境不建议这么做
+        include: "*"
+
+springdoc:
+  packagesToScan: com.mty.landmg
+  api-docs:
+    enabled: true
+
+doc-info:
+  author: york
+  title: Mty_landmg
+  description: 地块管理工具
+  email: 315895718@qq.com
+
+logging:
+  level:
+    org.springframework.security: debug
+
