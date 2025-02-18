@@ -1,5 +1,6 @@
 package com.mty.landmg.util;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -58,7 +59,9 @@ public class JwtUtil {
     public Map<String, Object> parseClims(String token) {
         // parseClaimsJwt() 方法是解析没有进行签名的token,
         // 签名的token应该使用parseClaimsJws(String jws) 方法
-        return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
+        Claims body = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
+        return body;
+//        return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
     }
 
 }

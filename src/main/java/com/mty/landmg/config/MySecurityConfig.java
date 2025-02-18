@@ -47,7 +47,12 @@ public class MySecurityConfig {
     @Bean
     public WebSecurityCustomizer webSecurity() {
         return web -> web.ignoring()
-                .antMatchers("/public/**", "/auth/**", "/actuator/**");
+                .antMatchers("/public/**", "/auth/**", "/actuator/**","/swagger-ui/**")
+                .antMatchers("/swagger-ui.html")
+                .antMatchers("/webjars/**")
+                .antMatchers("/swagger-resources/**")
+                .antMatchers("/v3/**")
+                .antMatchers("/csrf");
     }
 
     /**
@@ -63,7 +68,7 @@ public class MySecurityConfig {
         var provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(userDetailsService);
         //用DelegatingPasswordEncoder就不需要单独指定了，如果用的是某个具体PasswordEncoder， 这里需要指定，参见上次代码
-        //provider.setPasswordEncoder(passwordEncoder());
+        provider.setPasswordEncoder(passwordEncoder());
         return new ProviderManager(provider);
     }
 
@@ -94,7 +99,6 @@ public class MySecurityConfig {
      * @param configurer 配置
      */
     private static void myExceptionHandler(ExceptionHandlingConfigurer<HttpSecurity> configurer) {
-        //TODO: 后续改造成json结构
         configurer.accessDeniedHandler((request, response, accessDeniedException) -> {
             //无权限
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);

@@ -1,5 +1,6 @@
 package com.mty.landmg.service;
 
+import com.mty.landmg.dto.AuthDTO;
 import com.mty.landmg.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -10,6 +11,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2025-02-18
  */
 public interface IUserService extends IService<User> {
+
+    boolean addUser(AuthDTO authDTO);
 
 }
 

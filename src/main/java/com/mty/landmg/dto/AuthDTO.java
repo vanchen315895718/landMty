@@ -22,5 +22,10 @@ public class AuthDTO {
      * 密码
      */
     private String pwd;
+
+    /**
+     * 用户名称
+     */
+    private String memberName;
     
 }

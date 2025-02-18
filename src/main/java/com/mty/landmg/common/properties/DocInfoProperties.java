@@ -11,8 +11,8 @@ import org.springframework.context.annotation.Configuration;
  * @since 2025-02-18
  */
 @Data
-//@Configuration
-//@ConfigurationProperties(prefix = "doc-info")
+@Configuration
+@ConfigurationProperties(prefix = "doc-info")
 public class DocInfoProperties {
 
     /**
