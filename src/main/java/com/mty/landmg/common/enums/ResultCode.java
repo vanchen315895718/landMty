@@ -58,7 +58,14 @@ public enum ResultCode implements IResultCode {
     /**
      * 参数校验失败
      */
-    PARAM_VALID_ERROR(400, "参数校验失败");
+    PARAM_VALID_ERROR(400, "参数校验失败"),
+
+    /***
+     * 认证错误
+     */
+    AUTHCATION_ERROR(10001,"用户认证异常");
+
+
 
     private final int code;
 

@@ -32,12 +32,12 @@ public class MemberServiceImplTest {
     public void insertMember() {
         iUserService.save(User.builder()
                 .memberCode("user")
-                .memberName("用户李四").memberPassword("{noop}user")
+                .memberName("用户李四").memberPassword(passwordEncoder.encode("user"))
                 .roles("USER")
                 .build());
         iUserService.save(User.builder()
                 .memberCode("admin")
-                .memberName("管理员张三").memberPassword("{noop}admin")
+                .memberName("管理员张三").memberPassword(passwordEncoder.encode("admin"))
                 .roles("ADMIN,USER")
                 .build());
     }

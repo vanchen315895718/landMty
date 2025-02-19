@@ -1,5 +1,8 @@
 package com.mty.landmg.config;
 
+import com.alibaba.fastjson.JSONObject;
+import com.mty.landmg.common.api.R;
+import com.mty.landmg.common.enums.ResultCode;
 import com.mty.landmg.filter.JwtFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -105,13 +108,13 @@ public class MySecurityConfig {
             //中文需要设置编码，防止乱码
             response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
             response.setCharacterEncoding("UTF-8");
-            response.getWriter().println("无权限");
+            response.getWriter().println(JSONObject.toJSON(R.fail(ResultCode.UN_AUTHORIZED)));
         }).authenticationEntryPoint(((request, response, authException) -> {
             //认证失败
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
             response.setCharacterEncoding("UTF-8");
-            response.getWriter().println("认证失败/Token过期");
+            response.getWriter().println(JSONObject.toJSON(R.fail(ResultCode.AUTHCATION_ERROR)));
         }));
     }
 
