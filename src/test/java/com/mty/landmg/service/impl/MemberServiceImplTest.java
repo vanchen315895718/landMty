@@ -25,6 +25,13 @@ public class MemberServiceImplTest {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+
+    @Test
+    public void queryMemberNameByMemberCode(){
+        String s = iUserService.queryMemberNameByMemberCode("user");
+        System.out.println(s);
+    }
+
     /**
      * 插入Member数据
      */

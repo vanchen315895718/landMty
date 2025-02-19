@@ -50,7 +50,7 @@ public class MySecurityConfig {
     @Bean
     public WebSecurityCustomizer webSecurity() {
         return web -> web.ignoring()
-                .antMatchers("/public/**", "/auth/**", "/actuator/**","/swagger-ui/**")
+                .antMatchers("/public/**", "/auth/login/**", "/actuator/**","/swagger-ui/**")
                 .antMatchers("/swagger-ui.html")
                 .antMatchers("/webjars/**")
                 .antMatchers("/swagger-resources/**")

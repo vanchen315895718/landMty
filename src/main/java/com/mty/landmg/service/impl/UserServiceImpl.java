@@ -1,5 +1,7 @@
 package com.mty.landmg.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.mty.landmg.dto.AuthDTO;
 import com.mty.landmg.entity.User;
 import com.mty.landmg.mapper.UserMapper;
@@ -14,6 +16,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+import java.util.List;
+
 /**
  * 用户表(Member)表服务实现类
  *
@@ -26,6 +31,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Resource
+    private UserMapper userMapper;
 
     @Override
     public User loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -44,6 +52,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 .memberPassword(passwordEncoder.encode(authDTO.getPwd()))
                 .roles("USER")
                 .build());
+    }
+
+    public String queryMemberNameByMemberCode(String memberCode) {
+        QueryWrapper<User> query = Wrappers.query();
+        query.select("member_name").eq("member_code", memberCode);
+        List<String> memberNames = userMapper.selectObjs(query).stream().map(obj -> (String) obj)
+                .toList();
+        return CollUtil.isEmpty(memberNames) ? "" : memberNames.get(0);
     }
 }
 

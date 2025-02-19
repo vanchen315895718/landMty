@@ -1,5 +1,8 @@
 package com.mty.landmg.filter;
 
+import cn.hutool.core.util.ObjectUtil;
+import com.mty.landmg.entity.JwtRecord;
+import com.mty.landmg.mapper.JwtRecordMapper;
 import com.mty.landmg.util.JwtUtil;
 import com.alibaba.fastjson.JSON;
 import io.jsonwebtoken.Claims;
@@ -34,12 +37,26 @@ public class JwtFilter extends OncePerRequestFilter {
     @Autowired
     private JwtUtil jwtUtil;
 
+    @Autowired
+    private JwtRecordMapper jwtRecordMapper;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         var token = getToken(request);
         var claims = jwtUtil.parseClims(token);
+        long jwtId = (long) claims.get("jwtId");
+        if (ObjectUtil.isEmpty(jwtId)) {
+            throw new BadCredentialsException("无效Token");
+        }
+        JwtRecord jwtRecord = jwtRecordMapper.selectById(jwtId);
+        if (ObjectUtil.isEmpty(jwtRecord)
+                || jwtRecord.getIsDeleted() != 0) {
+            throw new BadCredentialsException("无效Token");
+        }
+
         //认证通过
         SecurityContextHolder.getContext().setAuthentication(createAuthentication(claims));
+
         filterChain.doFilter(request, response);
     }
 
@@ -55,7 +72,9 @@ public class JwtFilter extends OncePerRequestFilter {
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
         //认证通过：通过这个三个参数的方法放行
-        return new UsernamePasswordAuthenticationToken(claims.get(Claims.SUBJECT), null, roles);
+        CustomAuthenticationToken customAuthenticationToken = new CustomAuthenticationToken(claims.get(Claims.SUBJECT), null, roles);
+        customAuthenticationToken.putInfo("jwtId", claims.getOrDefault("jwtId", "") + "");
+        return customAuthenticationToken;
     }
 
     /**

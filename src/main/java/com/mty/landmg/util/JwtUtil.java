@@ -45,7 +45,7 @@ public class JwtUtil {
         return Jwts.builder()
                 .setSubject(sub)
                 .addClaims(claims)
-                .setExpiration(Date.from(Instant.now().plus(5, ChronoUnit.MINUTES)))
+                .setExpiration(Date.from(Instant.now().plus(300, ChronoUnit.MINUTES)))
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
     }

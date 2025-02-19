@@ -13,6 +13,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface IUserService extends IService<User> {
 
     boolean addUser(AuthDTO authDTO);
-
+    String queryMemberNameByMemberCode(String memberCode);
 }
 
