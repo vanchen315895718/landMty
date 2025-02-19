@@ -28,3 +28,22 @@ COMMENT
 ON COLUMN ums_member.member_password IS '用户密码';
 COMMENT
 ON COLUMN ums_member.roles IS '用户角色（多个逗号分隔）';
+
+ ---------------  jwt 记录表
+
+CREATE TABLE IF NOT EXISTS land_mg.jwt_record
+(
+    id bigint NOT NULL,
+    jwt text COLLATE pg_catalog."default" NOT NULL,
+    is_deleted integer NOT NULL,
+    create_time timestamp with time zone,
+    create_by character varying(100) COLLATE pg_catalog."default",
+    update_time timestamp with time zone,
+    update_by character varying(100) COLLATE pg_catalog."default",
+    CONSTRAINT jwt_record_pkey PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS land_mg.jwt_record
+    OWNER to postgres;

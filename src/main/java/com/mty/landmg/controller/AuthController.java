@@ -1,8 +1,8 @@
 package com.mty.landmg.controller;
 
-import cn.hutool.core.lang.Snowflake;
 import cn.hutool.core.lang.generator.SnowflakeGenerator;
 import com.alibaba.fastjson.JSON;
+import com.mty.landmg.common.api.R;
 import com.mty.landmg.dto.AuthDTO;
 import com.mty.landmg.dto.AuthResDTO;
 import com.mty.landmg.entity.JwtRecord;
@@ -16,7 +16,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -74,15 +73,13 @@ public class AuthController {
     //todo token接入redis后实现退出功能
 
     @PostMapping("/logout")
-    public String logout(Authentication authentication) {
-        log.info("会将认证信息（Authentication）带过来：{}", JSON.toJSONString(authentication));
+    public R logout(Authentication authentication) {
         CustomAuthenticationToken customAuthenticationToken = (CustomAuthenticationToken) authentication;
         long jwtId = Long.parseLong(customAuthenticationToken.getInfo("jwtId"));
 
         JwtRecord jwtRecord = JwtRecord.builder().id(jwtId).isDeleted(1).updateTime(new Date())
                 .updateBy((String) authentication.getPrincipal()).build();
         jwtRecordMapper.updateById(jwtRecord);
-
-        return "退出成功";
+        return R.success("退出登录成功");
     }
 }
