@@ -7,3 +7,7 @@ spring:
 
 jwt:
   secret: mGjAl43hDy9VB247Z5AojYx2L3c7XG95CQoX6kZJ5WlVoIKA5Ri9O03mdobKnfqg
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

@@ -1,7 +1,5 @@
 package com.mty.landmg.mapper;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.mty.landmg.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
