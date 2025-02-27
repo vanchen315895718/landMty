@@ -70,7 +70,6 @@ public class AuthController {
                 jwtToken);
     }
 
-    //todo token接入redis后实现退出功能
 
     @PostMapping("/logout")
     public R logout(Authentication authentication) {

@@ -1,11 +1,13 @@
 package com.mty.landmg.config;
 
+import com.mty.landmg.util.GeoUtil;
 import net.postgis.jdbc.PGgeometry;
 import net.postgis.jdbc.geometry.Geometry;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.MappedTypes;
 
+import java.io.IOException;
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,7 +17,17 @@ import java.sql.SQLException;
 public class GeometryTypeHandler extends BaseTypeHandler<String> {
     @Override
     public void setNonNullParameter(PreparedStatement ps, int i, String str, JdbcType jdbcType) throws SQLException {
-        PGgeometry pGgeometry = new PGgeometry(str);
+        PGgeometry pGgeometry;
+        try {
+            pGgeometry = new PGgeometry(str);
+        }catch (SQLException e){
+            try {
+                pGgeometry = new PGgeometry(GeoUtil.convertGeoJSONToWKT(str));
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                throw new RuntimeException(ex);
+            }
+        }
         Geometry geometry = pGgeometry.getGeometry();
         geometry.setSrid(4326);
         ps.setObject(i, pGgeometry);
