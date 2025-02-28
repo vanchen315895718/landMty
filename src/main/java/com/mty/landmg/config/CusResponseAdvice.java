@@ -27,6 +27,6 @@ public class CusResponseAdvice implements ResponseBodyAdvice<Object> {
         if (body instanceof R) {
             return body;
         }
-        return R.success(JSONObject.toJSONString(body));
+        return R.data(body);
     }
 }

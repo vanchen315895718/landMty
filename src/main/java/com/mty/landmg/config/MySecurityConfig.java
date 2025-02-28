@@ -43,22 +43,6 @@ public class MySecurityConfig {
     private JwtFilter jwtFilter;
 
     /**
-     * 配置忽略
-     *
-     * @return WebSecurityCustomizer
-     */
-    @Bean
-    public WebSecurityCustomizer webSecurity() {
-        return web -> web.ignoring()
-                .antMatchers("/public/**", "/auth/login/**", "/actuator/**","/swagger-ui/**")
-                .antMatchers("/swagger-ui.html")
-                .antMatchers("/webjars/**")
-                .antMatchers("/swagger-resources/**")
-                .antMatchers("/v3/**")
-                .antMatchers("/csrf");
-    }
-
-    /**
      * 认证管理器
      * 保证spring中只有一个 UserDetailsService，会自动加载， 这里我们将MemberServiceImpl实现了UserDetailsService
      * 所以这里的参数实际是MemberServiceImpl
@@ -90,7 +74,12 @@ public class MySecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .logout(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeRequests(req -> req.anyRequest().authenticated())
+                .authorizeRequests(req ->
+                        req.antMatchers("/public/**", "/auth/login/**",
+                                        "/actuator/**", "/swagger-ui/**", "/swagger-ui.html",
+                                        "/webjars/**", "/swagger-resources/**", "/v3/**", "/csrf").permitAll()
+                                .anyRequest().authenticated()
+                )
                 .exceptionHandling(MySecurityConfig::myExceptionHandler)
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
