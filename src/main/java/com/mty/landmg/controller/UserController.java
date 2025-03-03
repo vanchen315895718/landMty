@@ -3,6 +3,7 @@ package com.mty.landmg.controller;
 
 import com.mty.landmg.dto.AuthDTO;
 import com.mty.landmg.service.IUserService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/user")
+@Api(value = "用户管理")
 public class UserController {
 
     @Autowired

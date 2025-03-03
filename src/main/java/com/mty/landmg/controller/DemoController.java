@@ -1,6 +1,7 @@
 package com.mty.landmg.controller;
 
 import com.alibaba.fastjson.JSON;
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -19,6 +20,7 @@ import java.util.Collection;
  */
 @RestController
 @Slf4j
+@Api(value = "权限测试",tags = "测试或权限检查//todo 权限检查改造-根据需求")
 public class DemoController {
 
     /**

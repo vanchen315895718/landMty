@@ -23,10 +23,10 @@
         <spring-boot.version>2.7.3</spring-boot.version>
         <fastjson.version>2.0.12</fastjson.version>
         <mybatis-plus.version>3.5.2</mybatis-plus.version>
-        <springdoc.version>1.6.11</springdoc.version>
         <jjwt.version>0.11.5</jjwt.version>
         <hutool.version>5.8.5</hutool.version>
         <geotools.version>32.1</geotools.version>
+        <swagger.version>2.9.2</swagger.version>
     </properties>
 
     <dependencyManagement>
@@ -104,12 +104,6 @@
             <version>${jjwt.version}</version>
             <scope>runtime</scope>
         </dependency>
-        <!--springdoc 文档工具-->
-        <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-ui</artifactId>
-            <version>${springdoc.version}</version>
-        </dependency>
         <!--Hutool Java工具包-->
         <dependency>
             <groupId>cn.hutool</groupId>
@@ -150,6 +144,17 @@
             <groupId>org.geotools</groupId>
             <artifactId>gt-metadata</artifactId>
             <version>${geotools.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${swagger.version}</version>
         </dependency>
     </dependencies>
 

@@ -1,7 +1,6 @@
 package com.mty.landmg.controller;
 
 import cn.hutool.core.lang.generator.SnowflakeGenerator;
-import com.alibaba.fastjson.JSON;
 import com.mty.landmg.common.api.R;
 import com.mty.landmg.dto.AuthDTO;
 import com.mty.landmg.dto.AuthResDTO;
@@ -10,6 +9,7 @@ import com.mty.landmg.entity.User;
 import com.mty.landmg.filter.CustomAuthenticationToken;
 import com.mty.landmg.mapper.JwtRecordMapper;
 import com.mty.landmg.util.JwtUtil;
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -33,6 +33,7 @@ import java.util.Map;
 @Slf4j
 @RestController
 @RequestMapping("/auth")
+@Api(value = "鉴权",tags = "登录控制相关")
 public class AuthController {
 
     @Autowired

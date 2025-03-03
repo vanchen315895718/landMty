@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mty.landmg.dto.LandDTO;
 import com.mty.landmg.entity.Land;
 import com.mty.landmg.service.ILandService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/land")
+@Api(value = "地块管理" , tags = "地块控制类")
 public class LandController {
     @Autowired
     private ILandService landService;
