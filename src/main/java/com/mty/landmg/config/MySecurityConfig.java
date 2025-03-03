@@ -75,7 +75,7 @@ public class MySecurityConfig {
                 .logout(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeRequests(req ->
-                        req.antMatchers("/public/**", "/auth/login/**",
+                        req.antMatchers("/public/**", "/auth/login/**","/v2/**",
                                         "/actuator/**", "/swagger-ui/**", "/swagger-ui.html",
                                         "/webjars/**", "/swagger-resources/**", "/v3/**", "/csrf").permitAll()
                                 .anyRequest().authenticated()

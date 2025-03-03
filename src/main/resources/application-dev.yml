@@ -4,14 +4,17 @@ spring:
     #127.0.0.1
     username: ${DB_USERNAME:postgres}
     password: ${DB_PASSWORD:Mty233530}
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 
 # Actuator
-management:
-  endpoints:
-    web:
-      exposure:
-        # 开放所有端点，生产环境不建议这么做
-        include: "*"
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        # 开放所有端点，生产环境不建议这么做
+#        include: "*"
 
 
 logging:
