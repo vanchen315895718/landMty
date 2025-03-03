@@ -4,6 +4,11 @@ spring:
     username: ${DB_USERNAME:postgres}
     password: ${DB_PASSWORD:123456}
 
-springdoc:
-  api-docs:
+springfox:
+  documentation:
     enabled: false
+knife4j:
+  # 开启增强配置
+  enable: true
+  # 开启生产环境屏蔽
+  production: true

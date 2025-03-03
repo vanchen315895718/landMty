@@ -11,3 +11,12 @@ jwt:
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+springfox:
+  documentation:
+    enabled: false
+knife4j:
+  # 开启增强配置
+  enable: true
+  # 开启生产环境屏蔽
+  production: true

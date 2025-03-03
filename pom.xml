@@ -51,6 +51,16 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-boot-starter</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.shijingsh</groupId>
+            <artifactId>knife4j-spring-boot-starter</artifactId>
+            <version>3.0.5</version>
+        </dependency>
 <!--        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
@@ -146,7 +156,7 @@
             <version>${geotools.version}</version>
         </dependency>
 
-        <dependency>
+        <!--<dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
             <version>${swagger.version}</version>
@@ -155,7 +165,7 @@
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
             <version>${swagger.version}</version>
-        </dependency>
+        </dependency>-->
 
     </dependencies>
 
