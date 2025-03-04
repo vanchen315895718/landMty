@@ -24,7 +24,7 @@
         <fastjson.version>2.0.12</fastjson.version>
         <mybatis-plus.version>3.5.2</mybatis-plus.version>
         <jjwt.version>0.11.5</jjwt.version>
-        <hutool.version>5.8.5</hutool.version>
+        <hutool.version>5.8.21</hutool.version>
         <geotools.version>32.1</geotools.version>
         <swagger.version>2.9.2</swagger.version>
     </properties>
@@ -69,7 +69,7 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.3.6</version>
+            <version>42.3.9</version>
         </dependency>
 
         <dependency>
