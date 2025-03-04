@@ -17,7 +17,7 @@ import java.util.Date;
 @TableName("land_mg.jwt_record")
 public class JwtRecord {
     @TableId
-    private long id;
+    private Long id;
     private String jwt;
     private int isDeleted;
     private Date createTime;

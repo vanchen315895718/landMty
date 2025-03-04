@@ -28,7 +28,7 @@ public class LandController {
     }
 
     @DeleteMapping("/del/{id}")
-    public boolean del(@RequestParam("id") Long id) {
+    public boolean del(@PathVariable("id") Long id) {
         return landService.removeById(id);
     }
 

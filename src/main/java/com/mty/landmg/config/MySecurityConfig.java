@@ -39,6 +39,11 @@ import java.util.Map;
 @EnableMethodSecurity
 public class MySecurityConfig {
 
+    //免鉴权地址
+    private static final String[] PUBLIC_PATHS = {"/public/**", "/auth/login/**","/v2/**","/doc.html","/favicon.ico",
+            "/actuator/**", "/swagger-ui/**", "/swagger-ui.html",
+            "/webjars/**", "/swagger-resources/**", "/v3/**", "/csrf"};
+
     @Autowired
     private JwtFilter jwtFilter;
 
@@ -75,9 +80,7 @@ public class MySecurityConfig {
                 .logout(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeRequests(req ->
-                        req.antMatchers("/public/**", "/auth/login/**","/v2/**","/doc.html",
-                                        "/actuator/**", "/swagger-ui/**", "/swagger-ui.html",
-                                        "/webjars/**", "/swagger-resources/**", "/v3/**", "/csrf").permitAll()
+                        req.antMatchers(PUBLIC_PATHS).permitAll()
                                 .anyRequest().authenticated()
                 )
                 .exceptionHandling(MySecurityConfig::myExceptionHandler)
