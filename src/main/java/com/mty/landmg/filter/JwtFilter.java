@@ -1,15 +1,15 @@
 package com.mty.landmg.filter;
 
 import cn.hutool.core.util.ObjectUtil;
-import com.mty.landmg.entity.JwtRecord;
-import com.mty.landmg.mapper.JwtRecordMapper;
 import com.mty.landmg.util.JwtUtil;
 import com.alibaba.fastjson.JSON;
+import com.mty.landmg.util.RedisUtils;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -37,8 +37,6 @@ public class JwtFilter extends OncePerRequestFilter {
     @Autowired
     private JwtUtil jwtUtil;
 
-    @Autowired
-    private JwtRecordMapper jwtRecordMapper;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -48,9 +46,8 @@ public class JwtFilter extends OncePerRequestFilter {
         if (ObjectUtil.isEmpty(jwtId)) {
             throw new BadCredentialsException("无效Token");
         }
-        JwtRecord jwtRecord = jwtRecordMapper.selectById(jwtId);
-        if (ObjectUtil.isEmpty(jwtRecord)
-                || jwtRecord.getIsDeleted() != 0) {
+        String storedToken = (String) RedisUtils.get("jwt:" + jwtId);
+        if (ObjectUtil.isEmpty(storedToken) || !storedToken.equals(token)) {
             throw new BadCredentialsException("无效Token");
         }
 

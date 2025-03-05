@@ -37,7 +37,7 @@ public class JwtUtil {
     /**
      * 创建JWT token
      *
-     * @param sub    主题，这里我们放账号
+     * @param sub    主题，这里我们放账号 //fe:可能需要根据账号类型来判断过期时间
      * @param claims 载体
      * @return token
      */
@@ -45,7 +45,7 @@ public class JwtUtil {
         return Jwts.builder()
                 .setSubject(sub)
                 .addClaims(claims)
-                .setExpiration(Date.from(Instant.now().plus(300, ChronoUnit.MINUTES)))
+                .setExpiration(Date.from(Instant.now().plus(300, ChronoUnit.SECONDS)))
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
     }

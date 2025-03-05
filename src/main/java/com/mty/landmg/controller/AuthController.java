@@ -4,11 +4,10 @@ import cn.hutool.core.lang.generator.SnowflakeGenerator;
 import com.mty.landmg.common.api.R;
 import com.mty.landmg.dto.AuthDTO;
 import com.mty.landmg.dto.AuthResDTO;
-import com.mty.landmg.entity.JwtRecord;
 import com.mty.landmg.entity.User;
 import com.mty.landmg.filter.CustomAuthenticationToken;
-import com.mty.landmg.mapper.JwtRecordMapper;
 import com.mty.landmg.util.JwtUtil;
+import com.mty.landmg.util.RedisUtils;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Date;
 import java.util.Map;
 
 /**
@@ -42,9 +40,6 @@ public class AuthController {
     @Autowired
     private JwtUtil jwtUtil;
 
-    @Autowired
-    private JwtRecordMapper jwtRecordMapper;
-
     private static SnowflakeGenerator snowflakeGenerator = new SnowflakeGenerator();
 
     /**
@@ -63,10 +58,8 @@ public class AuthController {
         claims.put("jwtId", jwtId);
 
         String jwtToken = jwtUtil.createToken(auth.getCode(), claims);
-        JwtRecord jwtRecord = JwtRecord.builder().id(jwtId).jwt(jwtToken)
-                .isDeleted(0).createTime(new Date())
-                .createBy(auth.getCode()).build();
-        jwtRecordMapper.insert(jwtRecord);
+        RedisUtils.set("jwt:" + jwtId, jwtToken,300);
+
         return new AuthResDTO(auth.getCode(),
                 jwtToken);
     }
@@ -76,10 +69,7 @@ public class AuthController {
     public R logout(Authentication authentication) {
         CustomAuthenticationToken customAuthenticationToken = (CustomAuthenticationToken) authentication;
         long jwtId = Long.parseLong(customAuthenticationToken.getInfo("jwtId"));
-
-        JwtRecord jwtRecord = JwtRecord.builder().id(jwtId).isDeleted(1).updateTime(new Date())
-                .updateBy((String) authentication.getPrincipal()).build();
-        jwtRecordMapper.updateById(jwtRecord);
+        RedisUtils.del("jwt:" + jwtId);
         return R.success("退出登录成功");
     }
 }
